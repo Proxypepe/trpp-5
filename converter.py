@@ -1,6 +1,6 @@
 class Converter:
     @staticmethod
-    def convert(value:float, sys_from: str, sys_to: str):
+    def convert(value: float, sys_from: str, sys_to: str):
         systems = {"c": "celsius", "k": "kelvin", "f": "fahrenheit"}
         if sys_from in systems and sys_to in systems:
             if sys_from == sys_to:

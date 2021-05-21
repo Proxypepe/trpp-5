@@ -77,4 +77,3 @@ def test_fahrenheit_to_kelvin_fixed():
 
 def test_fahrenheit_to_celsius_fixed():
     assert Converter.fahrenheit_to_celsius(2264) == 1240
-
