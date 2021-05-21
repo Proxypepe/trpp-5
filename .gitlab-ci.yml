@@ -29,6 +29,7 @@ package:
   stage: package
   script:
     - gzip -k test.txt app.txt
+    - ls
   artifacts:
     paths:
       - test.txt.gz app.txt.gz
