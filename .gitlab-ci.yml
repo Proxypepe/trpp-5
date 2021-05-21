@@ -1,0 +1,39 @@
+image: python:3.9
+
+stages:
+  - init_env
+  - test
+  - app
+  - package
+
+init_env:
+  stage: init_env
+  script:
+  - apt install bash
+  - pip3 install pytest
+
+test:
+  stage: test
+  script:
+    - python3 -m pytest > test.txt
+    - cat test.txt
+  artifacts:
+    paths:
+      - test.txt
+
+app:
+  stage: app
+  script:
+    - python3 main.py 20 c f > app.txt
+    - cat app.txt
+  artifacts:
+    paths:
+      - app.txt
+
+package:
+  stage: package
+  script:
+    - gzip -k test.txt app.txt
+  artifacts:
+    paths:
+      - test.txt.gz app.txt.gz
