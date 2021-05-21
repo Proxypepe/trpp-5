@@ -21,9 +21,6 @@ app:
   script:
     - python3 main.py 20 c f > app.txt
     - cat app.txt
-  artifacts:
-    paths:
-      - app.txt
 
 package:
   stage: package
@@ -33,4 +30,3 @@ package:
   artifacts:
     paths:
       - test.txt.gz
-      - app.txt.gz
