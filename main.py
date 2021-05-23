@@ -1,12 +1,13 @@
 import sys
 
-from converter import Converter
+
+from C_converter import convert
 
 
 def main():
     if len(sys.argv) > 3:
         try:
-            result = Converter.convert(float(sys.argv[1]), sys.argv[2], sys.argv[3])
+            result = convert(float(sys.argv[1]), sys.argv[2], sys.argv[3])
             print(result)
             return result
         except Exception:

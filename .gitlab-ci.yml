@@ -9,9 +9,6 @@ stages:
 compile:
   stage: compile
   script:
-    - apt install bash
-    - apt install gcc
-    - apt install make
     - cd src_c/
     - make shared
     - cd ..
