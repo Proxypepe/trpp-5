@@ -1,14 +1,22 @@
 image: python:3.9
 
 stages:
+  - compile
   - test
   - app
   - package
 
+compile:
+  stage: compile
+  script:
+    - ./compile
+  artifacts:
+    paths:
+      - ./src_c/libconverter.so
+
 test:
   stage: test
   script:
-    - apt install bash
     - pip3 install pytest
     - python3 -m pytest > test.txt
     - cat test.txt
