@@ -1,0 +1,108 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI_trpp-5
+
+on:
+  push:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  compile:
+   runs-on: ubuntu-latest
+   
+   steps:
+      - uses: actions/checkout@v2
+      
+      - name: compile C code
+        run: |
+          apt install make gcc
+          cd src_c/
+          make shared
+          cd ..
+          
+      - name: Copy artifact 
+        uses: actions/upload-artifact@v2
+        with:
+          name: libconverter.so
+          path: ./src_c/libconverter.so
+          
+  test:
+   runs-on: ubuntu-latest
+   needs: compile
+   
+   steps:
+      - uses: actions/checkout@v2
+      
+      - name: Download shared labrary
+        uses: actions/download-artifact@v2
+        with:
+          name: libconverter.so
+      
+      - name: Testing app
+        run: |
+          - pip3 install pytest
+          - python3 -m pytest > test.txt
+          - cat test.txt
+      - name: Copy result of testing
+        uses: actions/upload-artifact@v2
+        with:
+          name: test
+          path: test.txt
+  
+  app:
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Download shaed labrary
+        uses: actions/download-artifact@v2
+        with:
+          name: libconverter.so
+      
+      - name: Exec app
+        run: |
+          - python3 main.py 20 c f > app.txt
+          - cat app.txt
+      - name: Copy result of testing
+        with:
+          name: app
+          path: app.txt
+          
+  package:
+    runs-on: ubuntu-latest
+    needs: app
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Download testing artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: test
+          
+      - name: Download app artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: app
+          
+      - name: Packege results
+        run: |
+          - gzip -k test.txt app.txt
+          - ls
+
+      - name: Upload testing result
+        uses: actions/upload-artifact@v2
+        with:
+          name: test_result
+          path: test.txt.gz
+          
+      - name: Upload app result
+        uses: actions/upload-artifact@v2
+        with:
+          name: app_result
+          path: app.txt.gz
+      
