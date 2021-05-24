@@ -3,7 +3,7 @@
 name: CI_trpp-5
 
 on:
-  pull_request:
+  push:
     branches: [ master ]
 
 
@@ -41,9 +41,9 @@ jobs:
       
       - name: Testing app
         run: |
-          - pip3 install pytest
-          - python3 -m pytest > test.txt
-          - cat test.txt
+          pip3 install pytest
+          python3 -m pytest > test.txt
+          cat test.txt
       - name: Copy result of testing
         uses: actions/upload-artifact@v2
         with:
@@ -64,8 +64,8 @@ jobs:
       
       - name: Exec app
         run: |
-          - python3 main.py 20 c f > app.txt
-          - cat app.txt
+          python3 main.py 20 c f > app.txt
+          cat app.txt
       - name: Copy result of testing
         with:
           name: app
@@ -90,8 +90,8 @@ jobs:
           
       - name: Packege results
         run: |
-          - gzip -k test.txt app.txt
-          - ls
+          gzip -k test.txt app.txt
+          ls
 
       - name: Upload testing result
         uses: actions/upload-artifact@v2
