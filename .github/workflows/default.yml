@@ -39,7 +39,7 @@ jobs:
         - name: Testing app
           run: |
             pip3 install pytest
-            python3 -m pytest > test.txt
+            pytest > test.txt
             cat test.txt
             
         - name: Copy result of testing
