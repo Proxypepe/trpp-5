@@ -39,5 +39,4 @@ jobs:
         - name: Testing app
           run: |
             pip3 install pytest
-            ls
-            echo "OK"
+            pytest
