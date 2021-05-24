@@ -1,7 +1,7 @@
 name: CI
 
 on:
-  pull_request:
+  push:
     branches: [ master ]
 
 
@@ -17,5 +17,10 @@ jobs:
           cd src_c
           make shared
           cd ..        
-
+          
+      - name: Copy artifact 
+        uses: actions/upload-artifact@v2
+        with:
+          name: libconverter.so
+          path: ./src_c/libconverter.so
      
