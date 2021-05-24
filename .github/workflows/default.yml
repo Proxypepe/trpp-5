@@ -39,4 +39,6 @@ jobs:
         - name: Testing app
           run: |
             pip3 install pytest
-            pytest
+            mv libconverter.so src_c/
+            pytest > test.txt
+            cat test.txt
