@@ -86,14 +86,19 @@ jobs:
           uses: actions/download-artifact@v2
           with:
             name: test
-            
+
         - name: Download app result
           uses: actions/download-artifact@v2
           with:
             name: app
-        
+
         - name: Package
           run: |
             gzip -k test.txt app.txt
             ls
-        
+
+        - name: Copy app result of testing
+          uses: actions/upload-artifact@v2
+          with:
+            name: app
+            path: app.txt.gz
