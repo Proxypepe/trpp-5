@@ -1,7 +1,7 @@
 name: CI
 
 on:
-  push:
+  pull_request:
     branches: [ master ]
 
 
@@ -97,8 +97,10 @@ jobs:
             gzip -k test.txt app.txt
             ls
 
-        - name: Copy app result of testing
+        - name: Copy packed result
           uses: actions/upload-artifact@v2
           with:
-            name: app
-            path: app.txt.gz
+            name: results
+            path: |
+              text.txt.gz
+              app.txt.gz
