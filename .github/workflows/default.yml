@@ -6,7 +6,7 @@ on:
 
 
 jobs:
-  build:
+  compile:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,3 +24,26 @@ jobs:
           name: libconverter.so
           path: ./src_c/libconverter.so
      
+  test:
+     runs-on: ubuntu-latest
+     needs: compile
+
+     steps:
+        - uses: actions/checkout@v2
+
+        - name: Download shared labrary
+          uses: actions/download-artifact@v2
+          with:
+            name: libconverter.so
+
+        - name: Testing app
+          run: |
+            pip3 install pytest
+            python3 -m pytest > test.txt
+            cat test.txt
+            
+        - name: Copy result of testing
+          uses: actions/upload-artifact@v2
+          with:
+            name: test
+            path: test.txt
