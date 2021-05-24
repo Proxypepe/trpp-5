@@ -50,23 +50,28 @@ jobs:
             path: test.txt
             
   app:
-    runs-on: ubuntu-latest
-    needs: compile
-    
-    steps:
-      - uses: actions/checkout@v2
-      
-      - name: Download shaed labrary
-        uses: actions/download-artifact@v2
-        with:
-          name: libconverter.so
-      
-      - name: Exec app
-        run: |
-          mv libconverter.so src_c/
-          python3 main.py 20 c f > app.txt
-          cat app.txt
-      - name: Copy result of testing
-        with:
-          name: app
-          path: app.txt
+     runs-on: ubuntu-latest
+     needs: compile
+
+     steps:
+        - uses: actions/checkout@v2
+
+        - name: Download shared labrary
+          uses: actions/download-artifact@v2
+          with:
+            name: libconverter.so
+            
+        - name: Move labrary
+          run: mv libconverter.so src_c/
+          
+        - name: Exec app
+          run: |
+            python3 main.py 20 c f > app.txt
+            cat app.txt
+            
+        - name: Copy result of testing
+          uses: actions/upload-artifact@v2
+          with:
+            name: app
+            path: app.txt
+          
