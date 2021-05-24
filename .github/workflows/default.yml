@@ -97,12 +97,3 @@ jobs:
             gzip -k test.txt app.txt
             ls
         
-        - name: Upload testing package result
-          with:
-            name: Copy packed result of testing
-            path: test.txt.gz
-
-        - name: Upload app package result
-          with:
-            name: Copy packed result of testing
-            path: app.txt.gz
